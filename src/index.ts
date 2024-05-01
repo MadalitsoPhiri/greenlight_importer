@@ -35,14 +35,15 @@ const processCustomer = async (customer: GreenLightCustomer) => {
         dateOfBirth: customer.Birthday,
         email: customer.EmailAddress,
       };
-
+  console.log("customerCreationPayload", customerCreationPayload);
       const newDigitalWalletCustomer = await createDigitalWalletCustomer(
         customerCreationPayload
       );
 
+      console.log("newDigitalWalletCustomer", newDigitalWalletCustomer);
 
  
-      
+       if (!newDigitalWalletCustomer) return;
         const newDigitalWalletCard = await createCustomerCard(
           newDigitalWalletCustomer.id,
           process.env.CARD_TEMPLATE_ID
@@ -61,6 +62,6 @@ for (let i = 0; i < customers.length; i++) {
     await processCustomer(customers[i]);
 
   } catch (e: any) {
-    console.error("could not process customer",e.message);
+    console.error("could not process customer");
   }
 } 
